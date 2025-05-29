@@ -1,0 +1,10 @@
+{
+  "workbench.colorCustomizations": {
+    "debugConsole.infoForeground": "#e2dbdb",
+    "debugConsole.errorForeground": "#ff0000",
+    "activityBar.background": "#1B2226",
+    "titleBar.activeBackground": "#1B2226",
+    "titleBar.activeForeground": "#FEFDFF"
+  },
+  "terminal.integrated.fontSize": 14
+}
