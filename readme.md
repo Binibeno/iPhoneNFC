@@ -91,6 +91,45 @@ Install libnfc into system directory
       
     sudo make install
 
+## Building MFOC
+
+Maybe: if you run configure like this maybe you don't need to patch it? `./configure --host arm64`
+
+https://github.com/openvenues/libpostal/issues/134
+
+    git clone https://github.com/nfc-tools/mfoc.git
+    cd mfoc
+    autoreconf -is
+    sed -i '2838i cross_compiling=yes' configure
+    export ac_cv_func_malloc_0_nonnull=yes
+    export ac_cv_func_realloc_0_nonnull=yes
+
+    ./configure
+    make
+
+    tee -a <<EOF entitlements.plist
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+        <key>platform-application</key>
+        <true/>
+        <key>com.apple.private.security.container-required</key>
+        <false/>
+        <key>com.apple.private.skip-library-validation</key>
+        <true/>
+    </dict>
+    </plist>
+    EOF
+
+    ldid -Sentitlements.plist src/mfoc
+    echo "try out mfoc"
+    ./src/mfoc
+    sudo make install
+
+    echo "test mfoc"
+    mfoc -O test.mfd
+
+
 ## Tips
 
 Make a working directory (e.g. `code`) in `~/code/`.
